@@ -1,0 +1,20 @@
+{
+  "name": "websocker-server",
+  "version": "1.0.0",
+  "description": "create a nodejs websocket server",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc -b",
+    "start": "npm run build && node dist/index.js"
+  },
+  "author": "yashpal singh",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "ws": "^8.16.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/ws": "^8.5.10"
+  }
+}

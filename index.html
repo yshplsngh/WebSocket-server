@@ -1,0 +1,30 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Testing</title>
+    <script>
+        const webSocket = new WebSocket("ws://localhost:8000")
+
+        function sendMessage(){
+            webSocket.send(document.getElementById('inputbox').value);
+        }
+
+        webSocket.onmessage = function (event){
+            document.getElementById('serverMessage').appendChild(document.createTextNode(event.data));
+            document.getElementById('serverMessage').appendChild(document.createElement("br"));
+        }
+    </script>
+</head>
+<body>
+<input id="inputbox" type="text"/>
+<button onclick="sendMessage()">send</button>
+<br>
+<h2>Event from server</h2>
+<div id="serverMessage">
+
+</div>
+</body>
+</html>
