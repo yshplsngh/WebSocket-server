@@ -6,16 +6,35 @@
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Testing</title>
     <script>
-        const webSocket = new WebSocket("ws://localhost:8000")
+        const webSocket = new WebSocket("ws://localhost:8000");
 
-        function sendMessage(){
-            webSocket.send(document.getElementById('inputbox').value);
+        function sendMessage() {
+            webSocket.send(JSON.stringify({
+                type: "message",
+                payload: {
+                    message: document.getElementById("inputbox").value
+                }
+            }));
         }
 
-        webSocket.onmessage = function (event){
-            document.getElementById('serverMessage').appendChild(document.createTextNode(event.data));
-            document.getElementById('serverMessage').appendChild(document.createElement("br"));
+        webSocket.onmessage = function (event) {
+            const data = JSON.parse(event.data);
+            if (data.type === "message") {
+                document.getElementById("serverMessages").appendChild(document.createTextNode(data.payload.message));
+                document.getElementById("serverMessages").appendChild(document.createElement("br"));
+            }
         }
+        webSocket.onopen = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const roomId = urlParams.get('roomId');
+            webSocket.send(JSON.stringify({
+                type: 'join',
+                payload: {
+                    roomId: roomId
+                }
+            }));
+        }
+
     </script>
 </head>
 <body>
